@@ -1,0 +1,18 @@
+# Run the following from the 
+/Users/ashishnc/Desktop/blockchain-cse540/cse540-forensic-chainguard/fabric-network-setup/test-network
+
+./network.sh up createChannel -c forensic-chainguard
+
+# Do not run ./network.sh down, might be ok to run ./network.sh stop and start but never down
+
+./network.sh deployCC -c forensic-chainguard -ccn chainguard -ccp /Users/ashishnc/Desktop/blockchain-cse540/cse540-forensic-chainguard/chaincode -ccl javascript -ccv 1.0 -ccs 1
+
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=${PWD}/../config/
+export CORE_PEER_LOCALMSPID=Org1MSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=localhost:7051
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+
+peer chaincode query -C forensic-chainguard -n chainguard -c '{"Args":["GetEvidence","EID1"]}'

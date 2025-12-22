@@ -9,14 +9,16 @@
     "dist"
   ],
   "scripts": {
+    "start": "fabric-chaincode-node start",
     "clean": "rimraf dist || rm -rf dist",
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "echo \"(optional) add eslint later\""
   },
   "dependencies": {
-    "fabric-contract-api": "^2.6.0",
-    "fabric-shim": "^2.6.0"
+    "fabric-contract-api": "^2.5.8",
+    "fabric-shim": "^2.5.8",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/node": "^18.19.0",

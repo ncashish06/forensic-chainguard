@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forensic Chainguard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-content">
+        <h1><i class="fa-solid fa-link"></i> Forensic Chainguard</h1>
+        <p class="subtitle">Blockchain-Enabled Chain of Custody System</p>
+      </div>
+    </header>
+
+    <main class="app-container">
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="create">
+            <i class="fa-solid fa-plus-circle"></i> Create Evidence
+          </button>
+          <button class="tab-button" data-tab="view">
+            <i class="fa-solid fa-magnifying-glass"></i> Verify & Track
+          </button>
+        </div>
+      </div>
+
+      <div id="tab-create" class="tab-content active">
+        <div class="card-header">
+          <h2>Register New Evidence</h2>
+          <p>Upload forensic assets to the ledger.</p>
+        </div>
+
+        <form id="create-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="evidenceId"
+                >Evidence ID <span class="required">*</span></label
+              >
+              <input
+                id="evidenceId"
+                name="evidenceId"
+                placeholder="e.g. EV-2025-001"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="caseId"
+                >Case ID <span class="required">*</span></label
+              >
+              <input
+                id="caseId"
+                name="caseId"
+                placeholder="e.g. CASE-NY-99"
+                required
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Describe the item..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="role">Role <span class="required">*</span></label>
+              <div class="select-wrapper">
+                <select id="role" name="role">
+                  <option value="ForensicTechnician">
+                    Forensic Technician
+                  </option>
+                  <option value="EvidenceManager">Evidence Manager</option>
+                  <option value="Viewer">Viewer</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="userId">User ID <span class="required">*</span></label>
+              <input id="userId" name="userId" placeholder="e.g. Agent Smith" />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="image"
+                >Evidence Image <span class="required">*</span></label
+              >
+              <div class="file-upload-wrapper">
+                <input
+                  id="image"
+                  name="image"
+                  type="file"
+                  accept="image/*"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Submit to Blockchain
+          </button>
+        </form>
+
+        <div id="create-result" class="result-box hidden"></div>
+      </div>
+
+      <div id="tab-view" class="tab-content">
+        <div class="card-header">
+          <h2>Verify & Trace</h2>
+          <p>Query the ledger for integrity checks and history.</p>
+        </div>
+
+        <form id="view-form" class="search-bar">
+          <div class="form-group flex-grow">
+            <input
+              id="viewEvidenceId"
+              name="viewEvidenceId"
+              placeholder="Enter Evidence ID to Search..."
+              required
+            />
+          </div>
+          <button type="submit" class="btn-primary">
+            <i class="fa-solid fa-search"></i> Fetch
+          </button>
+          <button type="button" id="events-button" class="btn-secondary">
+            <i class="fa-solid fa-list-ul"></i> History
+          </button>
+        </form>
+
+        <div id="view-result" class="result-box hidden"></div>
+
+        <div id="events-section" class="hidden-section">
+          <h3 class="section-title">
+            <i class="fa-solid fa-clock-rotate-left"></i> Chain of Custody
+          </h3>
+          <div id="events-result" class="timeline-container"></div>
+        </div>
+
+        <div class="action-card">
+          <h3 class="section-title">
+            <i class="fa-solid fa-pen-to-square"></i> Update Custody
+          </h3>
+          <form id="action-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Action Type <span class="required">*</span></label>
+                <div class="select-wrapper">
+                  <select id="actionType" name="actionType">
+                    <option value="CHECKIN">Check In</option>
+                    <option value="TRANSFER">Transfer</option>
+                    <option value="REMOVE">Remove</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Role <span class="required">*</span></label>
+                <div class="select-wrapper">
+                  <select id="actionRole" name="actionRole">
+                    <option value="ForensicTechnician">
+                      Forensic Technician
+                    </option>
+                    <option value="EvidenceManager">Evidence Manager</option>
+                    <option value="Viewer">Viewer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>User ID <span class="required">*</span></label>
+                <input
+                  id="actionUserId"
+                  name="actionUserId"
+                  placeholder="e.g. bob"
+                />
+              </div>
+              <div class="form-group">
+                <label>Current Location <span class="required">*</span></label>
+                <input
+                  id="custodian"
+                  name="custodian"
+                  placeholder="e.g. Lab A"
+                />
+              </div>
+              <div class="form-group">
+                <label>To Location (Transfer) <span class="required">*</span></label>
+                <input
+                  id="toCustodian"
+                  name="toCustodian"
+                  placeholder="e.g. Courtroom"
+                />
+              </div>
+              <div class="form-group full-width">
+                <label>Notes</label>
+                <input
+                  id="actionNotes"
+                  name="actionNotes"
+                  placeholder="Reason for action..."
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn-primary full-width-btn">
+              Apply Action
+            </button>
+          </form>
+
+          <div id="action-result" class="result-box hidden"></div>
+        </div>
+      </div>
+    </main>
+    <script src="main.js"></script>
+  </body>
+</html>
